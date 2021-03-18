@@ -11,7 +11,7 @@ import argparse
 import jinja2
 
 from markdown import Markdown
-from markdown.extensions.wikilinks import WikiLinkExtension
+from mdx_wikilink_plus.mdx_wikilink_plus import WikiLinkPlusExtension
 
 from staticjinja import Site
 
@@ -21,7 +21,15 @@ def init_argparse():
     parser.add_argument('--dir', '-d', required=True, help='directory containing Markdown wiki pages')
     return parser
 
-markdown = Markdown(output_format="html5", extensions=[WikiLinkExtension(base_url='', end_url='.html')])
+markdown_configs = {
+    'mdx_wikilink_plus': {
+        'base_url': '',
+        'end_url': '.html',
+        'url_whitespace': '_',
+    },
+}
+
+markdown = Markdown(output_format="html5", extensions=[WikiLinkPlusExtension(markdown_configs['mdx_wikilink_plus'])])
 
 def md_context(template):
     markdown_content = Path(template.filename).read_text()
