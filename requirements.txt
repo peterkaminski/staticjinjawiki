@@ -1,0 +1,7 @@
+docopt==0.6.2
+easywatch==0.0.5
+Jinja2==2.11.3
+Markdown==3.3.4
+MarkupSafe==1.1.1
+staticjinja==1.0.4
+watchdog==2.0.2
