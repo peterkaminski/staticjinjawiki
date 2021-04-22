@@ -52,8 +52,10 @@ def main():
     args = argparser.parse_args();
 
     try:
+        index_md_created = False
         if not os.path.exists(Path() / args.dir / "index.md"):
             shutil.copyfile(Path() / args.dir / "README.md", Path() / args.dir / "index.md")
+            index_md_created = True
 
         site = Site.make_site(
             searchpath=args.dir,
@@ -62,6 +64,9 @@ def main():
             rules=[(r".*\.md", render_md)],
         )
         site.render()
+
+        if index_md_created:
+            os.remove(Path() / args.dir / "index.md")
 
     except jinja2.exceptions.TemplateNotFound as err:
         sys.stderr.write("\nMissing template. Please create file: {}\n\n".format(err))
