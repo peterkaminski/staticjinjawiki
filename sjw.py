@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
+# Static Jinja Wiki v1.0.0 - https://github.com/peterkaminski/staticjinjawiki
+
 import os
 from pathlib import Path
 import re
 import sys
+import shutil
 
 import argparse
 
@@ -49,6 +52,9 @@ def main():
     args = argparser.parse_args();
 
     try:
+        if not os.path.exists(Path() / args.dir / "index.md"):
+            shutil.copyfile(Path() / args.dir / "README.md", Path() / args.dir / "index.md")
+
         site = Site.make_site(
             searchpath=args.dir,
             outpath=str(Path() / args.dir / ".staticjinjawiki" / "output"),
